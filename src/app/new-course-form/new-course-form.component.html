@@ -1,0 +1,37 @@
+<form #f="ngForm" (ngSubmit)="submit(f)">
+    <div class="form-group">
+        <label for="name">Course Name</label>
+        <input class="form-control" required minlength="3" ngModel #name="ngModel" id="name" name="name" type="text">
+        <div class="alert alert-danger" *ngIf="name.touched && name.invalid">
+            <div *ngIf="name.errors.required">
+                Course Name is required.
+            </div>
+            <div *ngIf="name.errors.minlength">
+                Course name should be atleast {{ name.errors.minlength.requiredLength }} letter characters.
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="category">
+            Category
+        </label>
+        <select required ngModel name="category" id="category" class="form-control" #category="ngModel">
+            <option *ngFor="let c of categories" [value]="c.id">{{ c.name }}</option>
+        </select>
+        <div class="alert alert-danger" *ngIf="c.touched && c.invalid">
+            <div *ngIf="c.errors.required">
+                Category is required.
+            </div>
+        </div>
+    </div>
+    <div class="checkbox">
+        <label for="moneybackGurantee">
+            <input type="checkbox" ngModel name="hasMoneybackGurantee" id="moneybackGurantee">
+            30-day money back guarantee?
+        </label>
+    </div>
+    <p>
+        {{ f.value | json }}
+    </p>
+    <button class="btn btn-primary" [disabled]="!f.invalid">Create</button>
+</form>
